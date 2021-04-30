@@ -11,7 +11,15 @@
 {% block content %}
 <div class="text-center pt-5">
   <h1>Blog App</h1>
-  <p>{{quote.quote}}</p>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <p class="class-text"><i class="fas fa-quote-left"> </i> {{quote.quote}}</p>
+        <p class="class-author">{{quote.author}}</p>
+      </div>
+    </div>
+    
+  </div>
 </div>
 
 

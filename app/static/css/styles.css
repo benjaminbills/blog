@@ -1,0 +1,14 @@
+.card {
+  border: none;
+  max-width: 30rem;
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
+  
+}
+.class-text {
+  font-size: 20px;
+}
+.class-author {
+  text-align: right;
+}
