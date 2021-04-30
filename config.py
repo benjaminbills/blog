@@ -3,10 +3,13 @@ import re
 
 
 class Config:
-    '''
+    """
     General configuration parent class
-    '''
+    """
+
     SECRET_KEY = os.environ.get("SECRET_KEY")
+    QUOTE_API_BASE_URL = "http://quotes.stormconsultancy.co.uk/random.json"
+    DEBUG = True
 
 
 class ProdConfig(Config):
@@ -16,6 +19,7 @@ class ProdConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     """
+
     pass
 
 
@@ -26,8 +30,10 @@ class DevConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     """
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://obafemi:Bentamjay1@localhost/blogapp'
 
+    SQLALCHEMY_DATABASE_URI = (
+        "postgresql+psycopg2://obafemi:Bentamjay1@localhost/blogapp"
+    )
     DEBUG = True
 
 
@@ -36,5 +42,8 @@ class TestConfig(Config):
     pass
 
 
-config_options = {"development": DevConfig,
-                  "production": ProdConfig, 'test': TestConfig}
+config_options = {
+    "development": DevConfig,
+    "production": ProdConfig,
+    "test": TestConfig,
+}
