@@ -3,6 +3,7 @@ from . import main
 from ..requests import get_quote
 from flask_login import login_required, current_user
 from .. import db
+from .forms import BlogForm
 
 
 @main.route("/")
@@ -12,3 +13,12 @@ def index():
     """
     quote = get_quote()
     return render_template("index.html", quote=quote)
+
+
+@main.route("/new_blog")
+def new_blog():
+    form = BlogForm()
+    if form.validate_on_submit():
+        print("Yes")
+
+    return render_template("new_post.html", post_form=form)

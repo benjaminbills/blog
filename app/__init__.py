@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from config import config_options
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from flask_simplemde import SimpleMDE
 
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
@@ -10,6 +11,7 @@ login_manager.login_view = "auth.login"
 
 db = SQLAlchemy()
 csrf = CSRFProtect()
+simple = SimpleMDE()
 
 
 def create_app(config_name):
@@ -20,6 +22,8 @@ def create_app(config_name):
 
     # Initializing DATABASE.
     db.init_app(app)
+
+    simple.init_app(app)
 
     # Intializing Login Manager
     login_manager.init_app(app)
