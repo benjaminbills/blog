@@ -45,12 +45,12 @@ class Quote:
         self.quote = quote
 
 
-class Blog:
+class Blog(db.Model):
     """
     Blog class to define Blog Objects
     """
 
-    __tablename__ = "reviews"
+    __tablename__ = "blogs"
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
