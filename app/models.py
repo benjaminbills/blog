@@ -2,6 +2,7 @@ from . import db
 from . import login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 
 @login_manager.user_loader
@@ -14,6 +15,7 @@ class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), index=True)
+    blogs = db.relationship("Blog", backref="user", lazy="dynamic")
     email = db.Column(db.String(255), unique=True, index=True)
     password_hash = db.Column(db.String(255))
 
@@ -41,3 +43,24 @@ class Quote:
         self.id = id
         self.author = author
         self.quote = quote
+
+
+class Blog:
+    """
+    Blog class to define Blog Objects
+    """
+
+    __tablename__ = "reviews"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    title = db.Column(db.String)
+    blog_content = db.Column(db.String)
+    posted = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def save_blog(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f"Blog {self.blog_content}"
