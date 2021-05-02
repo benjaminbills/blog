@@ -15,14 +15,7 @@ def index():
     """
     quote = get_quote()
     blogs = Blog.query.filter_by()
-    if blogs is None:
-        abort(404)
-    format_blogs = markdown2.markdown(
-        blogs.blog_content, extras=["code-friendly", "fenced-code-blocks"]
-    )
-    return render_template(
-        "index.html", blogs=blogs, format_blogs=format_blogs, quote=quote
-    )
+    return render_template("index.html", blogs=blogs, quote=quote)
 
 
 @main.route("/new_blog", methods=["GET", "POST"])
@@ -37,3 +30,14 @@ def new_blog():
         new_blog.save_blog()
         return redirect(url_for(".index"))
     return render_template("new_post.html", post_form=form)
+
+
+@main.route("/blog/<int:id>")
+def single_blog(id):
+    blog = Blog.query.get(id)
+    if blog is None:
+        abort(404)
+    format_blog = markdown2.markdown(
+        blog.blog_content, extras=["code-friendly", "fenced-code-blocks"]
+    )
+    return render_template("blog.html", format_blog=format_blog)

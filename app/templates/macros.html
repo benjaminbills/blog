@@ -8,7 +8,8 @@
 {% macro displayBlogs(blog_list) %}
   {% for blog in blog_list %}
   <div class="">
-    <span>{{blog.blog_content}}</span>
+    <a href="{{url_for('main.single_blog',id=blog.id)}}">{{blog.title}}</a>
+    <p>{{blog.blog_content}}</p>
   </div>
   {% endfor %}
 {% endmacro %}
