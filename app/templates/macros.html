@@ -5,3 +5,10 @@
   </div>
   {% endfor %}
 {% endmacro %}
+{% macro displayBlogs(blog_list) %}
+  {% for blog in blog_list %}
+  <div class="">
+    <span>{{blog.blog_content}}</span>
+  </div>
+  {% endfor %}
+{% endmacro %}
