@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+
+
+{% block content %}
+
+<div class="container pt-5">
+  <p>{{blog.blog_content}}</p>
+  <p>{{blog.user.username}}</p>
+ <h2>Add your Comment</h2>
+ <form method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <label for="description">Description</label>
+  {{form.description(class_='form-control')}}
+  <input type="submit">
+</form>
+</div>
+<hr>
+<div class="container pt-4">
+<h2 class="pb-2">Comments</h2>
+{{macro.displayCommentList(comment)}}
+
+</div>
+
+
+{% endblock%}

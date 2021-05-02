@@ -3,8 +3,8 @@ from . import main
 from ..requests import get_quote
 from flask_login import login_required, current_user
 from .. import db
-from .forms import BlogForm
-from ..models import Blog
+from .forms import BlogForm, CommentForm
+from ..models import Blog, Comment
 import markdown2
 
 
@@ -41,3 +41,30 @@ def single_blog(id):
         blog.blog_content, extras=["code-friendly", "fenced-code-blocks"]
     )
     return render_template("blog.html", format_blog=format_blog)
+
+
+@main.route("/comment/new/<int:blog_id>", methods=["GET", "POST"])
+@login_required
+def new_comment(blog_id):
+    form = CommentForm()
+    blog = Blog.query.get(blog_id)
+    if form.validate_on_submit():
+        description = form.description.data
+        new_comment = Comment(
+            description=description,
+            user_id=current_user._get_current_object().id,
+            blog_id=blog_id,
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect(url_for(".new_comment", blog_id=blog_id))
+    all_comments = Comment.query.filter_by(blog_id=blog_id).all()
+    return render_template("comments.html", form=form, comment=all_comments, blog=blog)
+
+
+@main.route("/comment/delete/<int:id>/<int:blog_id>")
+def delete_comment(id, blog_id):
+    comment = Comment.query.filter_by(id=id).first()
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for(".new_comment", blog_id=blog_id))

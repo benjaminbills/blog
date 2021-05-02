@@ -16,6 +16,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), index=True)
     blogs = db.relationship("Blog", backref="user", lazy="dynamic")
+    comment = db.relationship("Comment", backref="user", lazy="dynamic")
     email = db.Column(db.String(255), unique=True, index=True)
     password_hash = db.Column(db.String(255))
 
@@ -64,3 +65,15 @@ class Blog(db.Model):
 
     def __repr__(self):
         return f"Blog {self.blog_content}"
+
+
+class Comment(db.Model):
+    __tablename__ = "comments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    blog_id = db.Column(db.Integer, db.ForeignKey("blogs.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    description = db.Column(db.Text)
+
+    def __repr__(self):
+        return f"Comment : id: {self.id} comment: {self.description}"
