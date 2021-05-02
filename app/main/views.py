@@ -6,6 +6,8 @@ from .. import db
 from .forms import BlogForm, CommentForm, SubscriberForm
 from ..models import Blog, Comment, Subscriber
 import markdown2
+from ..email import mail_message
+from sqlalchemy import desc
 
 
 @main.route("/", methods=["GET", "POST"])
@@ -14,7 +16,7 @@ def index():
     View root page function that returns the index page and its data
     """
     quote = get_quote()
-    blogs = Blog.query.filter_by()
+    blogs = Blog.query.order_by(desc(Blog.posted))
     form = SubscriberForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -29,12 +31,18 @@ def index():
 @login_required
 def new_blog():
     form = BlogForm()
+    recipient = []
+    subscribers = Subscriber.query.filter_by()
+    for subscriber in subscribers:
+        recipient.append(subscriber.email)
     if form.validate_on_submit():
         title = form.title.data
         content = form.content.data
         user_id = current_user._get_current_object().id
         new_blog = Blog(title=title, blog_content=content, user_id=user_id)
         new_blog.save_blog()
+        print(recipient)
+        mail_message("Read the latest blog post", "email/new_blog_alert", recipient)
         return redirect(url_for(".index"))
     return render_template("new_post.html", post_form=form)
 

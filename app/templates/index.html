@@ -20,9 +20,9 @@
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         {% if subscriber_form.email.errors %}
             {{subscriber_form.email(class="form-control is-invalid")}}
-            {% else %}
+          {% else %}
             {{subscriber_form.email(class="form-control", placeholder="Enter Email to Subscribe")}}
-            {% endif %}
+        {% endif %}
             {{subscriber_form.submit(class="btn btn-outline-secondary")}}
             {{macro.displayError(subscriber_form.email.errors)}}
           </div>

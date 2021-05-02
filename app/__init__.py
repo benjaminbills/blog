@@ -4,11 +4,12 @@ from config import config_options
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_simplemde import SimpleMDE
+from flask_mail import Mail
 
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "auth.login"
-
+mail = Mail()
 db = SQLAlchemy()
 csrf = CSRFProtect()
 simple = SimpleMDE()
@@ -38,6 +39,7 @@ def create_app(config_name):
     # setting config
     from .requests import configure_request
 
+    mail.init_app(app)
     configure_request(app)
     csrf.init_app(app)
     return app
