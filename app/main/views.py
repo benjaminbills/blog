@@ -3,19 +3,26 @@ from . import main
 from ..requests import get_quote
 from flask_login import login_required, current_user
 from .. import db
-from .forms import BlogForm, CommentForm
-from ..models import Blog, Comment
+from .forms import BlogForm, CommentForm, SubscriberForm
+from ..models import Blog, Comment, Subscriber
 import markdown2
 
 
-@main.route("/")
+@main.route("/", methods=["GET", "POST"])
 def index():
     """
     View root page function that returns the index page and its data
     """
     quote = get_quote()
     blogs = Blog.query.filter_by()
-    return render_template("index.html", blogs=blogs, quote=quote)
+    form = SubscriberForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        new_subscriber = Subscriber(email=email)
+        db.session.add(new_subscriber)
+        db.session.commit()
+        return redirect(url_for(".index"))
+    return render_template("index.html", blogs=blogs, quote=quote, subscriber_form=form)
 
 
 @main.route("/new_blog", methods=["GET", "POST"])

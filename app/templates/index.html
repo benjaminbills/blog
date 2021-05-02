@@ -14,6 +14,20 @@
   <div class="">
     {{macro.displayBlogs(blogs)}}
   </div>
+  <div class="container subscribe">
+    <form method="POST">
+    <div class="input-group mb-3">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        {% if subscriber_form.email.errors %}
+            {{subscriber_form.email(class="form-control is-invalid")}}
+            {% else %}
+            {{subscriber_form.email(class="form-control", placeholder="Enter Email to Subscribe")}}
+            {% endif %}
+            {{subscriber_form.submit(class="btn btn-outline-secondary")}}
+            {{macro.displayError(subscriber_form.email.errors)}}
+          </div>
+        </form>
+  </div>
   <div class="container">
     <div class="card">
       <div class="card-body">
