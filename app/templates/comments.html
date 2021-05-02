@@ -7,7 +7,12 @@
 <div class="container pt-5">
   <p>{{blog.blog_content}}</p>
   <p>{{blog.user.username}}</p>
+  <p>{{current_user.id}}</p>
+  <p>{{blog.user.id}}</p>
+  {% if current_user.id == blog.user.id %}
   <button><a href="{{url_for('main.delete_blog',id = blog.id)}}">Delete Blog</a></button>
+  <button><a href="{{url_for('main.delete_blog',id = blog.id)}}">Edit Blog</a></button>
+  {% endif %}
  <h2>Add your Comment</h2>
  <form method="POST">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -19,8 +24,25 @@
 <hr>
 <div class="container pt-4">
 <h2 class="pb-2">Comments</h2>
-{{macro.displayCommentList(comment)}}
-
+<!-- {{macro.displayCommentList(comment)}} -->
+{% for comment in comment %}
+  <div class="card pb-3">
+    <div class="card-header">
+      <p>{{current_user.id}}</p>
+      <p>{{comment.user.id}}</p>
+      {% if current_user.id == blog.user.id %}
+      <button><a href="{{url_for('main.delete_comment',id = comment.id, blog_id = comment.blog_id)}}">Delete</a></button>
+      <button>Edit</button>
+      {%endif%}
+    </div>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <p>{{comment.description}}</p>
+        <footer class="blockquote-footer">By: <cite title="Source Title">{{comment.user.username}}</cite></footer>
+      </blockquote>
+    </div>
+  </div>
+  {% endfor %}
 </div>
 
 

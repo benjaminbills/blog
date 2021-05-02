@@ -19,6 +19,7 @@
   {% for comment in comment_list %}
   <div class="card pb-3">
     <div class="card-header">
+      <p>{{comment.user.id}}</p>
       <button><a href="{{url_for('main.delete_comment',id = comment.id, blog_id = comment.blog_id)}}">Delete</a></button>
       <button>Edit</button>
     </div>
