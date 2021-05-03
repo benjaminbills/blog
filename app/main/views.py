@@ -4,7 +4,7 @@ from ..requests import get_quote
 from flask_login import login_required, current_user
 from .. import db
 from .forms import BlogForm, CommentForm, SubscriberForm
-from ..models import Blog, Comment, Subscriber
+from ..models import Blog, Comment, Subscriber, User
 import markdown2
 from ..email import mail_message
 from sqlalchemy import desc
@@ -116,3 +116,13 @@ def delete_comment(id, blog_id):
     db.session.delete(comment)
     db.session.commit()
     return redirect(url_for(".new_comment", blog_id=blog_id))
+
+
+@main.route("/user/<uname>")
+def profile(uname):
+    user = User.query.filter_by(username=uname).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user=user)

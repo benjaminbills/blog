@@ -1,0 +1,109 @@
+.profile-card {
+  border: 0 !important;
+}
+
+.profile-card-header {
+  padding: 0;
+  text-align: center;
+  height: 25vh;
+}
+
+.bg-overlay {
+  width: 100%;
+  height: 100%;
+  padding-top: 30px;
+  padding-bottom: 60px;
+  background-color: rgba(131, 123, 123, 0.767);
+}
+
+.profile-img {
+  top: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.479);
+  max-width: 130px;
+}
+
+.profile-card-body {
+  text-align: center;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.13);
+  border: 0 !important;
+}
+
+.profile-card-footer {
+  background-color: #ffffff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.13);
+  border: 0 !important;
+}
+
+.name, .username {
+  color: #ffffff;
+}
+
+.name {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.username {
+  font-weight: 300;
+  font-size: 1rem;
+  opacity: .75;
+}
+
+.profile-info {
+  color: #ffffff;
+  margin-top: 1.5vh;
+}
+
+.profile-info h3 {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profile-info-row div {
+  display: inline-block;
+}
+
+.profile-info-row div span {
+  display: block;
+}
+
+.profile-info-row div:nth-child(2) {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.profile-info-row div span:first-child {
+  font-weight: 700;
+}
+
+.btn-follow {
+  border-radius: 35px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  /* width: 20%; */
+  color: #ffffff;
+  background-color: #000000;
+  background: rgba(0, 0, 0, 0.137);
+  border: 2px solid #ffffff;
+  box-shadow: none;
+  font-size: 14px;
+}
+
+.btn-follow:hover, .btn-follow:active {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.ver {
+  max-width: 20px;
+}
+
+.hashtag:before {
+  content: '#';
+}
+
+.hashtag {
+  color: #006af5;
+}
