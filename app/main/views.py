@@ -3,7 +3,7 @@ from . import main
 from ..requests import get_quote
 from flask_login import login_required, current_user
 from .. import db
-from .forms import BlogForm, CommentForm, SubscriberForm
+from .forms import BlogForm, CommentForm, SubscriberForm, UpdateProfile
 from ..models import Blog, Comment, Subscriber, User
 import markdown2
 from ..email import mail_message
@@ -121,8 +121,29 @@ def delete_comment(id, blog_id):
 @main.route("/user/<uname>")
 def profile(uname):
     user = User.query.filter_by(username=uname).first()
-
+    user_id = user.id
+    blogs = Blog.query.filter_by(user_id=user_id)
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user=user)
+    return render_template("profile/profile.html", user=user, blogs=blogs)
+
+
+@main.route("/user/<uname>/update", methods=["GET", "POST"])
+@login_required
+def update_profile(uname):
+    user = User.query.filter_by(username=uname).first()
+    if user is None:
+        abort(404)
+
+    form = UpdateProfile()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+        user.profile_pic_path = form.profile_pic_path.data
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for(".profile", uname=user.username))
+
+    return render_template("profile/update.html", form=form)

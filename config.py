@@ -19,6 +19,7 @@ class Config:
 
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
+
     DEBUG = True
 
 

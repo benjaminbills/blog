@@ -16,10 +16,12 @@
           <div class="card-header profile-card-header">
               <div class="bg-overlay">
                   <div class="container">
-                      <img class="profile-img" src="https://api.sololearn.com/Uploads/Avatars/14077830.jpg" alt=""> 
+                      <img class="profile-img" src="{{user.profile_pic_path}}" alt=""> 
                           <div class="mt-3">
                               <h3 class="name">{{user.username}} </h3>
-                              <button class="btn btn-dark">Update Profile</button>
+                              {% if current_user.username == user.username %}
+                              <button class="btn btn-dark"><a href="{{url_for('main.update_profile',uname = user.username)}}">Update Profile</a></button>
+                              {% endif %}
                           </div>
                   </div>
               </div>
@@ -27,27 +29,25 @@
           <div class="card-body profile-card-body pt-5">
               <div class="container">
                   <h4 class="text-center">About</h4>
-                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem cumque officiis, culpa corporis quibusdam velit ipsam! <span class="hashtag">Impedit</span>, libero dolor. Ea rem neque sunt <span class="hashtag">accusantium</span> odit impedit inventore delectus necessitatibus tenetur.</p>
+                  <p> {{user.bio}}</p>
               </div>
           </div>
           <div class="card-footer profile-card-footer pb-5">
               <div class="container">
-                  <h4 class="text-center mb-4">Posts</h4>
+                  <h4 class="text-center mb-5">Blogs written by {{user.username}}</h4>
                   <div class="row mb-4">
-                      <div class="col-6">
-                          <img class="card-img" src="https://storage.needpix.com/rsynced_images/square-stripes-1.jpg" alt="">
+                    {% for blog in blogs %}
+                      <div class="col-6 image-button">
+                          <h4 class="text-center">{{blog.title}}</h4>
+                          <img class="card-img" src="{{blog.urlToImage}}" alt="">                          
+                          {% if current_user.username == blog.user.username %}
+                            <button class="btn"><a href="{{url_for('main.new_comment',blog_id = blog.id)}}">Read more</a></button>
+                          {%else%}
+                            <button href="{{url_for('main.single_blog',blog_id = blog.id)}}" class="btn"> <a href="{{url_for('main.single_blog',blog_id = blog.id)}}">Read more</a></button>
+                          {% endif %}
                       </div>
-                      <div class="col-6">
-                          <img class="card-img" src="https://www.elsetge.cat/myimg/f/2-20256_multi-colored-square-glitter-background-printables-sparkle-pretty.jpg" alt="">
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-6">
-                          <img class="card-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvvTfk4psOM7V_OtaQsQ7sClGY1fv5igL5jSRhS64eg7p8ofpy&s" alt="">
-                      </div>
-                      <div class="col-6">
-                          <img class="card-img" src="https://storage.needpix.com/rsynced_images/square-stripes.jpg" alt="">
-                      </div>
+                    {%endfor%}
+                      
                   </div>
               </div>
 

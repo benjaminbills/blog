@@ -25,3 +25,9 @@ class SubscriberForm(FlaskForm):
     def validate_email(self, data_field):
         if Subscriber.query.filter_by(email=data_field.data).first():
             raise ValidationError("You've already subscribe with that email")
+
+
+class UpdateProfile(FlaskForm):
+    bio = TextAreaField("Tell us about you.", validators=[Required()])
+    profile_pic_path = StringField("Enter Image Url", validators=[Required()])
+    submit = SubmitField("Submit")
