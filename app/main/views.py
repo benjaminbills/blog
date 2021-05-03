@@ -55,18 +55,25 @@ def new_blog():
     return render_template("new_post.html", post_form=form)
 
 
-@main.route("/blog/<int:id>")
-def single_blog(id):
-    blog = Blog.query.get(id)
+@main.route("/blog/<int:blog_id>")
+def single_blog(blog_id):
+    blog = Blog.query.get(blog_id)
     if blog is None:
         abort(404)
     format_blog = markdown2.markdown(
         blog.blog_content, extras=["code-friendly", "fenced-code-blocks"]
     )
-    return render_template("blog.html", format_blog=format_blog)
+    all_comments = Comment.query.filter_by(blog_id=blog_id).all()
+    return render_template(
+        "blog.html",
+        blog=blog,
+        format_blog=format_blog,
+        comment=all_comments,
+    )
 
 
 @main.route("/blog/delete/<int:id>")
+@login_required
 def delete_blog(id):
     blog = Blog.query.filter_by(id=id).first()
     db.session.delete(blog)
@@ -103,6 +110,7 @@ def new_comment(blog_id):
 
 
 @main.route("/comment/delete/<int:id>/<int:blog_id>")
+@login_required
 def delete_comment(id, blog_id):
     comment = Comment.query.filter_by(id=id).first()
     db.session.delete(comment)
