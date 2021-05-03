@@ -49,8 +49,8 @@ def new_blog():
             user_id=user_id,
         )
         new_blog.save_blog()
-        print(recipient)
-        mail_message("Read the latest blog post", "email/new_blog_alert", recipient)
+        print(new_blog.id)
+        mail_message("Read the latest blog post", "email/new_blog_alert", recipient,blog=new_blog)
         return redirect(url_for(".index"))
     return render_template("new_post.html", post_form=form)
 
