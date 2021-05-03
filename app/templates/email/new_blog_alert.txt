@@ -2,7 +2,7 @@ Hello
 We have added a new blog to our site.
 The blog is about {{blog.title}}
 Kindly click on the URL for more update.
-https://technoblogger.herokuapp.com/comment/new/{{blog.id}}
+https://technoblogger.herokuapp.com/blog/{{blog.id}}
 
 TECHNOBLOG
 Keeping You Updated.
