@@ -1,18 +1,30 @@
 {% extends 'base.html'%}
 {% import 'macros.html' as macro%}
 
+<!-- Styles block -->
+
+{% block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    
+{% endblock %}
 
 {% block content %}
 
 <div class="container pt-5">
-  <p>{{blog.blog_content}}</p>
-  <p>{{blog.user.username}}</p>
-  <p>{{current_user.id}}</p>
-  <p>{{blog.user.id}}</p>
-  {% if current_user.id == blog.user.id %}
-  <button><a href="{{url_for('main.delete_blog',id = blog.id)}}">Delete Blog</a></button>
-  <button><a href="{{url_for('main.delete_blog',id = blog.id)}}">Edit Blog</a></button>
-  {% endif %}
+  <div class="card">
+    <h5 class="card-title text-center">{{blog.title}}</h5>
+    <img src="{{blog.urlToImage}}" class="card-img-top" alt="{{blog.title}}">
+    <div class="card-body">
+      <h5 class="card-title">{{blog.title}}</h5>
+      <p class="card-subtitle mb-2 text-muted">{{blog.description}}</p>
+      <p class="card-text">{{format_blog|safe}}</p>
+      {% if current_user.id == blog.user.id %}
+      <button class="btn btn-warning"><a href="{{url_for('main.delete_blog',id = blog.id)}}">Delete Blog</a></button>
+      {% endif %}
+    </div>
+  </div>
+
  <h2>Add your Comment</h2>
  <form method="POST">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -28,8 +40,6 @@
 {% for comment in comment %}
   <div class="card pb-3">
     <div class="card-header">
-      <p>{{current_user.id}}</p>
-      <p>{{comment.user.id}}</p>
       {% if current_user.id == blog.user.id %}
       <button><a href="{{url_for('main.delete_comment',id = comment.id, blog_id = comment.blog_id)}}">Delete</a></button>
       <button>Edit</button>

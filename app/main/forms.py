@@ -8,6 +8,8 @@ from wtforms import ValidationError
 class BlogForm(FlaskForm):
 
     title = StringField("Review title", validators=[Required()])
+    description = StringField("Description", validators=[Required()])
+    urlToImage = StringField("Image Path", validators=[Required()])
     content = TextAreaField("Blog Content")
     submit = SubmitField("Submit")
 

@@ -17,6 +17,14 @@
       {{post_form.title(class="form-control")}}
     </div>
     <div class="mb-3">
+      <label for="" class="form-label">Description</label>
+      {{post_form.description(class="form-control")}}
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Image Url</label>
+      {{post_form.urlToImage(class="form-control")}}
+    </div>
+    <div class="mb-3">
       <label for="" class="form-label">Blog</label>
       {{post_form.content}}
       {{simplemde.load}}

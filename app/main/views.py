@@ -37,9 +37,17 @@ def new_blog():
         recipient.append(subscriber.email)
     if form.validate_on_submit():
         title = form.title.data
+        description = form.description.data
+        urlToImage = form.urlToImage.data
         content = form.content.data
         user_id = current_user._get_current_object().id
-        new_blog = Blog(title=title, blog_content=content, user_id=user_id)
+        new_blog = Blog(
+            title=title,
+            description=description,
+            urlToImage=urlToImage,
+            blog_content=content,
+            user_id=user_id,
+        )
         new_blog.save_blog()
         print(recipient)
         mail_message("Read the latest blog post", "email/new_blog_alert", recipient)
@@ -71,6 +79,9 @@ def delete_blog(id):
 def new_comment(blog_id):
     form = CommentForm()
     blog = Blog.query.get(blog_id)
+    format_blog = markdown2.markdown(
+        blog.blog_content, extras=["code-friendly", "fenced-code-blocks"]
+    )
     if form.validate_on_submit():
         description = form.description.data
         new_comment = Comment(
@@ -82,7 +93,13 @@ def new_comment(blog_id):
         db.session.commit()
         return redirect(url_for(".new_comment", blog_id=blog_id))
     all_comments = Comment.query.filter_by(blog_id=blog_id).all()
-    return render_template("comments.html", form=form, comment=all_comments, blog=blog)
+    return render_template(
+        "comments.html",
+        form=form,
+        comment=all_comments,
+        blog=blog,
+        format_blog=format_blog,
+    )
 
 
 @main.route("/comment/delete/<int:id>/<int:blog_id>")
