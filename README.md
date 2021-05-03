@@ -52,7 +52,6 @@ If you'd like to request a new function, feel free to do so by opening an issue 
 - [Python](https://www.python.org/)- version 3.8.5.
 - [Bootstrap](https://getbootstrap.com/)- version 5.0
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/) - version 1.1.2
-- [Google Fonts](https://fonts.google.com/)
 - [Check requirements for more details](https://github.com/benjaminbills/blog/blob/master/requirements.txt)
 
 ## To-do
