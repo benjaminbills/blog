@@ -67,6 +67,11 @@ class Blog(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def get_blogs(cls,id):
+        reviews = Blog.query.filter_by(user_id=id).all()
+        return blogs
+
     def __repr__(self):
         return f"Blog {self.blog_content}"
 
@@ -79,6 +84,10 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     description = db.Column(db.Text)
 
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
     def __repr__(self):
         return f"Comment : id: {self.id} comment: {self.description}"
 
@@ -87,6 +96,10 @@ class Subscriber(db.Model):
     __tablename__ = "subscribers"
     id = db.Column(db.Integer, primary_key=True)
     email = email = db.Column(db.String(255), unique=True, index=True)
+
+    def save_subscriber(self):
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         return f"Subscriber : id: {self.email}"
