@@ -5,14 +5,14 @@
 
 {% block styles%}
     {{ super() }}
-    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/blog.css')}}">
     
 {% endblock %}
 
 {% block content %}
 
 <div class="container pt-5">
-  <div class="card">
+  <div class="card blog-card">
     <h5 class="card-title text-center">{{blog.title}}</h5>
     <img src="{{blog.urlToImage}}" class="card-img-top" alt="{{blog.title}}">
     <div class="card-body">
@@ -41,8 +41,7 @@
   <div class="card pb-3">
     <div class="card-header">
       {% if current_user.id == blog.user.id %}
-      <button><a href="{{url_for('main.delete_comment',id = comment.id, blog_id = comment.blog_id)}}">Delete</a></button>
-      <button>Edit</button>
+      <button class="btn btn-danger"><a href="{{url_for('main.delete_comment',id = comment.id, blog_id = comment.blog_id)}}">Delete</a></button>
       {%endif%}
     </div>
     <div class="card-body">

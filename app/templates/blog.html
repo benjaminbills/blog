@@ -1,10 +1,45 @@
 {% extends 'base.html'%}
 {% import 'macros.html' as macro%}
 
+<!-- Styles block -->
+
+{% block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/blog.css')}}">
+    
+{% endblock %}
 
 {% block content %}
-<div class="">
-  {{format_blog|safe}}
+
+<div class="container pt-5">
+  <div class="card blog-card">
+    <h5 class="card-title text-center">{{blog.title}}</h5>
+    <img src="{{blog.urlToImage}}" class="card-img-top" alt="{{blog.title}}">
+    <div class="card-body">
+      <h5 class="card-title">{{blog.title}}</h5>
+      <p class="card-subtitle mb-2 text-muted">{{blog.description}}</p>
+      <p class="card-text">{{format_blog|safe}}</p>
+      {% if current_user.id == blog.user.id %}
+      <button class="btn btn-warning"><a href="{{url_for('main.delete_blog',id = blog.id)}}">Delete Blog</a></button>
+      {% endif %}
+    </div>
+  </div>
 </div>
+<hr>
+<div class="container pt-4">
+<h2 class="pb-2">Comments</h2>
+<!-- {{macro.displayCommentList(comment)}} -->
+{% for comment in comment %}
+  <div class="card pb-3">
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <p>{{comment.description}}</p>
+        <footer class="blockquote-footer">By: <cite title="Source Title">{{comment.user.username}}</cite></footer>
+      </blockquote>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
 
 {% endblock%}

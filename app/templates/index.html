@@ -10,9 +10,9 @@
 
 {% block content %}
 <div class="text-center pt-5">
-  <h1>Blog App</h1>
+  <h1 class="pb-4">Welcome to Tech Blog</h1>
   <div class="">
-    {{macro.displayBlogs(blogs)}}
+    {{macro.displayBlogs(blogs,current_user)}}
   </div>
   <div class="container subscribe">
     <form method="POST">
