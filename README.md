@@ -25,7 +25,7 @@ Run `pip3 install -r /path/to/requirements.txt`
 
 Run `.\start.sh` for a dev server. Navigate to `http://localhost:5000/`. The app will automatically reload if you change any of the source files.
 
-## [Usage](https://pitcheshotline.herokuapp.com/)
+## [Usage](https://technoblogger.herokuapp.com/)
 
 ### Development
 
